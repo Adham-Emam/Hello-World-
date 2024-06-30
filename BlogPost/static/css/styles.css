@@ -1,0 +1,138 @@
+@import url("https://fonts.googleapis.com/css2?family=Julius+Sans+One&display=swap");
+:root {
+  --main-color: #8a2be2;
+  --secondary-color: #1a5ded;
+  --third-color: #e211c6;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: rgb(15, 0, 15);
+  color: #ddd;
+  font-family: Arial, sans-serif;
+}
+ul {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+}
+/* Default container width */
+.container {
+  max-width: 1200px;
+  padding: 0 50px;
+  margin: 0 auto; /* Center the container */
+}
+
+/* Media query for tablets */
+@media only screen and (max-width: 768px) {
+  .container {
+    max-width: 90%; /* Adjust width for tablets */
+  }
+}
+
+/* Media query for mobile devices */
+@media only screen and (max-width: 480px) {
+  .container {
+    max-width: 100%; /* Adjust width for mobile devices */
+    padding: 0 10px; /* Add some padding for better readability */
+  }
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: white;
+  width: fit-content;
+  font-family: "Julius Sans One", sans-serif;
+  line-height: 1.5;
+}
+p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #aaa;
+}
+header .container {
+  padding: 20px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+header .container .logo {
+  width: 60px;
+  height: 60px;
+}
+header .container .logo img {
+  width: 100%;
+  height: 100%;
+}
+nav ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  width: fit-content;
+}
+nav ul li {
+  padding: 10px;
+  position: relative;
+}
+nav ul li::before {
+  content: "";
+  background-color: var(--main-color);
+  width: 0%;
+  height: 1px;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  transition-duration: 0.3s;
+}
+nav ul li:hover::before {
+  width: 100%;
+}
+nav ul li a {
+  transition-duration: 0.3s;
+}
+nav ul li:hover a {
+  color: #bbb;
+}
+nav a {
+  color: white;
+}
+
+main {
+  padding: 2rem;
+  text-align: center;
+}
+.intro,
+.about,
+.highlights,
+.cta {
+  margin-bottom: 2rem;
+}
+.intro {
+  height: calc(100vh - 100px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+}
+.intro h1 {
+  font-size: 3rem;
+}
+.intro h1 span {
+  background: linear-gradient(
+    to right,
+    var(--secondary-color) 0%,
+    var(--third-color) 50%
+  );
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

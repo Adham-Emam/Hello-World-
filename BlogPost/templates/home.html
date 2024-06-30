@@ -1,7 +1,56 @@
-{% extends 'layout.html' %} {% block content %}
- {% if user.is_authenticated %}
-<h1>Hello, {{ user.username }}!</h1>
-{% else %}
-<h1>Hello, World!</h1>
-{% endif %} 
+{% extends 'layout.html' %} {% load static %} {% block styles %}
+
+<style>
+  .overlay,
+  .section-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: -1;
+  }
+  .overlay {
+    background-color: rgba(35, 0, 15, 0.5);
+  }
+</style>
+{% endblock %} {% block content %}
+<img src="{% static 'images/background.png' %}" class="section-bg" alt="" />
+<div class="overlay"></div>
+<main>
+  <section class="intro">
+      <h1>Welcome to <span>Hello World</span> Blog!</h1>
+      <p>
+          Dive into the latest trends and tips in technology and coding. Let's code
+          the future together!
+        </p>
+  </section>
+  <section class="about">
+    <h2>About Us</h2>
+    <p>
+      Hello World Blog is your go-to resource for all things tech. From beginner
+      tutorials to advanced programming techniques, we cover it all.
+    </p>
+  </section>
+  <section class="highlights">
+    <h2>What You'll Find Here</h2>
+    <ul>
+      <li>In-depth tutorials and guides</li>
+      <li>Latest news and trends in technology</li>
+      <li>Inspiring stories from the tech world</li>
+      <li>Tips and tricks to enhance your coding skills</li>
+    </ul>
+  </section>
+  <section class="cta">
+    <h2>Join Our Community</h2>
+    <p>
+      Stay updated with our latest posts and join our vibrant community of tech
+      enthusiasts.
+    </p>
+    <a href="{% url 'register' %}" class="cta-button">Get Started</a>
+  </section>
+</main>
+<footer>
+  <p>&copy; 2024 Hello World Blog</p>
+</footer>
 {% endblock %}
