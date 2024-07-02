@@ -1,16 +1,140 @@
-{% extends 'layout.html' %} {% block content %} {% if messages %}
-<ul>
-  {% for message in messages %}
-  <li>{{ message }}</li>
-  {% endfor %}
-</ul>
-{% endif %}
-<h2>Login</h2>
-<form method="post">
-  {% csrf_token %}
-  <input type="text" name="username" placeholder="Username" required/>
-  <input type="password" name="password" placeholder="Password"  required/>
-  <button type="submit">Login</button>
-</form>
-<p>Don't have an account? <a href="{% url 'register' %}">Register here</a>.</p>
+{% extends 'layout.html' %}{% load static %} {% block title %} Hello, World! |
+Login {% endblock %} {% block styles %}
+<style>
+  .form-login .container {
+    background-color: white;
+    color: black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 500px;
+    padding: 0;
+    margin: 150px auto 50px;
+    box-shadow: -5px 5px 0 0 var(--third-color);
+  }
+  @media (max-width: 500px) {
+    .form-login .container {
+      margin: 150px 10px 50px;
+    }
+  }
+  .form-container {
+    width: 100%;
+    padding: 20px 40px;
+  }
+  .form-container .message {
+    border: 1px solid var(--main-color);
+    background-color: rgba(151, 17, 17, 0.5);
+    color: rgba(150, 0, 0, 0.5);
+    padding: 10px 20px;
+  }
+  .form-container h2 {
+    font-weight: 300;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #022;
+  }
+  .form-container h2 span {
+    font-weight: 900;
+    font-size: 3rem;
+  }
+  .form-container form input {
+    background-color: transparent;
+    display: block;
+    width: 100%;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    outline: none;
+    transition-duration: 0.3s;
+    border: 1px solid black;
+  }
+  .form-container form input:focus {
+    border-left: 5px solid var(--main-color);
+  }
+  .form-container form button {
+    padding: 10px 40px;
+    background-color: var(--third-color);
+    color: white;
+    border: none;
+    transition-duration: 0.3s;
+    cursor: pointer;
+    font-weight: 900;
+    font-size: 1rem;
+    margin-right: 20px;
+  }
+  .form-container form button:hover {
+    background-color: var(--main-color);
+  }
+  .form-container form a {
+    padding: 7px 40px;
+    border: 3px solid var(--main-color);
+    color: var(--main-color);
+    font-weight: 900;
+    transition-duration: 0.3s;
+  }
+  @media (max-width: 480px) {
+    .form-container form button,
+    .form-container form a {
+      display: block;
+      text-align: center;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  }
+  .form-container form a:hover {
+    background-color: var(--main-color);
+    color: white;
+  }
+  .image {
+    width: 100%;
+    height: 500px;
+    position: relative;
+  }
+  @media (max-width: 768px) {
+    .image {
+      display: none;
+    }
+  }
+  .image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin-left: auto;
+  }
+</style>
+{% endblock %} {% block content %}
+<div class="form-login">
+  <div class="container">
+    <div class="form-container">
+      {% if messages %}
+      <ul>
+        {% for message in messages %}
+        <li class="message">{{ message }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      <h2>
+        Hello,<br />
+        <span> World! </span>
+      </h2>
+      <form method="post">
+        {% csrf_token %}
+        <input type="text" name="username" placeholder="Username" required />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          required
+        />
+        <button type="submit">Login</button>
+        <a href="{% url 'register' %}">Sign Up</a>
+      </form>
+    </div>
+    <div class="image">
+      <img
+        src="https://tse2.mm.bing.net/th?id=OIG1.7g9UYoWqNfmIzFSvigUU&pid=ImgGn"
+        alt=""
+      />
+    </div>
+  </div>
+</div>
 {% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'layout.html' %} {% load static%} {% block title %} Hello, World! |
+Blogs {% endblock %} {% block styles %}
+<style>
+  .container .blogs {
+    margin-top: 150px;
+  }
+  .container .blogs h2 + p {
+    text-align: center;
+    margin-top: 20px;
+    color: var(--text-color);
+    font-weight: 600;
+  }
+  @media (max-width: 767px) {
+    .container .blogs h2 + p {
+      text-align: left !important;
+    }
+  }
+</style>
+{% endblock %} {% block content %}
+<div class="container">
+  <section class="blogs">
+    {% if title %}
+    <h2>{{title}}</h2>
+    {% else %}
+    <h2>Welcome to Tech Insights</h2>
+    <p>Your daily dose of the latest in technology and programming.</p>
+    {% endif %}
+    <div class="cards">
+      {% for article in articles %}
+      <div class="card">
+        <a href="{% url 'blog_page' article.id %}">
+          <h3>{{article.title}}</h3>
+          {% if article.cover_img %}
+          <img src="{{article.cover_img}}" alt="" />
+          {% else %}
+          <img src="{% static 'images/blank.jpg' %}" alt="" />
+          {% endif %}
+        </a>
+        <ul>
+          {% for tag in article.tags %}
+          <li><a href="{% url 'search' tag %}">{{tag}}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+</div>
+{% endblock %}

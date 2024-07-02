@@ -1,56 +1,94 @@
-{% extends 'layout.html' %} {% load static %} {% block styles %}
-
-<style>
-  .overlay,
-  .section-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    z-index: -1;
-  }
-  .overlay {
-    background-color: rgba(35, 0, 15, 0.5);
-  }
-</style>
-{% endblock %} {% block content %}
-<img src="{% static 'images/background.png' %}" class="section-bg" alt="" />
-<div class="overlay"></div>
+{% extends 'layout.html' %} {% load static %} 
+{% block title %}
+  Hello, World! | Home
+{% endblock %} 
+{% block content %}
 <main>
   <section class="intro">
-      <h1>Welcome to <span>Hello World</span> Blog!</h1>
+    <h1>Welcome to <span>Hello World</span> Blog!</h1>
+    <p>
+      Dive into the latest trends and tips in technology and coding. Let's code
+      the future together!
+    </p>
+    <a href="#blogs"><i class="fa-solid fa-caret-down"></i></a>
+  </section>
+  <section class="blogs" id="blogs">
+    <h2>Latest Blogs</h2>
+    <div class="cards">
+      {% for article in articles %}
+      <div class="card">
+        <a href="{% url 'blog_page' article.id %}">
+          <h3>{{article.title}}</h3>
+          {% if article.cover_img %}
+          <img src="{{article.cover_img}}" alt="" />
+          {% else %}
+          <img src="{% static 'images/blank.jpg' %}" alt="" />
+          {% endif %}
+        </a>
+        <ul>
+          {% for tag in article.tags %}
+          <li><a href="#">{{tag}}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endfor %}
+    </div>
+    <a href="{% url 'blogs' %}" class="btn">Discover more</a>
+  </section>
+  <div class="container">
+    <section class="about">
+      <h2>About Us</h2>
       <p>
-          Dive into the latest trends and tips in technology and coding. Let's code
-          the future together!
-        </p>
-  </section>
-  <section class="about">
-    <h2>About Us</h2>
-    <p>
-      Hello World Blog is your go-to resource for all things tech. From beginner
-      tutorials to advanced programming techniques, we cover it all.
-    </p>
-  </section>
-  <section class="highlights">
-    <h2>What You'll Find Here</h2>
-    <ul>
-      <li>In-depth tutorials and guides</li>
-      <li>Latest news and trends in technology</li>
-      <li>Inspiring stories from the tech world</li>
-      <li>Tips and tricks to enhance your coding skills</li>
-    </ul>
-  </section>
-  <section class="cta">
-    <h2>Join Our Community</h2>
-    <p>
-      Stay updated with our latest posts and join our vibrant community of tech
-      enthusiasts.
-    </p>
-    <a href="{% url 'register' %}" class="cta-button">Get Started</a>
-  </section>
+        Welcome to the Hello World Blog, your ultimate destination for tech
+        enthusiasts, programmers, and innovators. Our mission is to demystify
+        the world of technology, making it accessible and exciting for everyone,
+        from beginners to seasoned professionals.
+      </p>
+    </section>
+    <div class="story">
+      <h2>Our Story</h2>
+      <p>
+        Founded by a group of passionate developers, the Hello World Blog was
+        created to foster a community where knowledge is shared, ideas are
+        exchanged, and creativity is nurtured. We believe that technology has
+        the power to transform lives, and we are here to guide you on your
+        journey to harnessing its potential.
+      </p>
+    </div>
+    <section class="highlights">
+      <h2>What You'll Find Here</h2>
+      <ul>
+        <li>
+          In-Depth Tutorials: Step-by-step guides to help you master new
+          programming languages, frameworks, and tools.
+        </li>
+        <li>
+          Latest Tech News: Stay updated with the newest trends, breakthroughs,
+          and insights in the tech industry.
+        </li>
+        <li>
+          Inspirational Stories: Discover how tech innovators and startups are
+          changing the world.
+        </li>
+        <li>
+          Tips and Tricks: Practical advice to enhance your coding skills and
+          boost your productivity.
+        </li>
+      </ul>
+    </section>
+    <section class="cta">
+      <h2>Join Our Community</h2>
+      <p>
+        The Hello World Blog is more than just a website; it's a community.
+        Connect with like-minded individuals, participate in discussions, and
+        collaborate on projects. Whether you're here to learn, share, or just
+        stay informed, you're in the right place.
+      </p>
+      <a href="{% url 'register' %}" class="btn">Get Started</a>
+    </section>
+  </div>
 </main>
 <footer>
-  <p>&copy; 2024 Hello World Blog</p>
+  <p>&copy; 2024 <a href="#">Hello World</a> Blog</p>
 </footer>
 {% endblock %}
