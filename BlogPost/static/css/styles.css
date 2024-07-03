@@ -116,7 +116,7 @@ header form button {
   outline: none;
   color: var(--third-color);
 }
-header form input {
+header form input { 
   width: calc(100% - 25px);
 }
 header form i{ 
