@@ -86,7 +86,7 @@ def blogs(request):
     return render(request, 'blogs.html', context)
 
 
-def search_results(request, tag):
+def search_tag(request, tag):
     articles = BlogPost.objects.all()
 
     results = [article for article in articles if tag in article.tags]
@@ -96,8 +96,34 @@ def search_results(request, tag):
 
     context = {
         'articles': results,
-        'title': f'Search Results for: {tag}'
+        'title': f'Search Results for: {tag}',
+        'tag': tag
     }
+    return render(request, 'blogs.html', context)
+
+
+def search_query(request):
+    query = request.GET.get('search', '')
+    articles = BlogPost.objects.all()
+
+    results = []
+
+    if query:
+        for article in articles:
+            if query in article.tags:
+                results.append(article)
+            elif query in article.title:
+                results.append(article)
+
+        for article in results:
+            article.tags = article.tags.split(', ')[:3]
+
+    context = {
+        'articles': results,
+        'title': f'Search Results for: {query}',
+        'tag': query
+    }
+
     return render(request, 'blogs.html', context)
 
 

@@ -1,5 +1,5 @@
-{% extends 'layout.html' %} {% load static%} {% block title %} Hello, World! |
-Blogs {% endblock %} {% block styles %}
+{% extends 'layout.html' %} {% load static%} {% block title %} {% if tag %}
+Hello, World! | {{tag}} {% else %} Hello, World! | Blogs {% endif %} {% endblock %} {% block styles %}
 <style>
   .container .blogs {
     margin-top: 150px;

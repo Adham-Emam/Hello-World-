@@ -143,7 +143,7 @@
     {% endif %}
     <ul>
       {% for tag in article.tags %}
-      <li><a href="#">{{tag}}</a></li>
+      <li><a href="{% url 'search' tag %}">{{tag}}</a></li>
       {% endfor %}
     </ul>
     <p>{{article.description}}</p>
