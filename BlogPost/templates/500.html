@@ -1,0 +1,48 @@
+{% extends 'layout.html' %} {% block title%} Internal Server Error {% endblock
+%} {% block styles %}
+<style>
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    line-height: 2;
+    min-height: 100vh;
+  }
+  h2 {
+    font-size: 3.5rem;
+    color: var(--main-color);
+    text-shadow: -3px 3px 0 var(--header-color);
+    margin-bottom: 25px;
+  }
+  h5 {
+    color: var(--third-color);
+    font-size: 1.2rem;
+    margin: 20px 0 10px;
+  }
+  p,
+  li {
+    font-weight: 600;
+  }
+  a {
+    color: var(--header-color);
+    transition-duration: 0.3s;
+  }
+  a:hover {
+    color: var(--main-color);
+    text-shadow: -2px 2px 0 var(--header-color);
+  }
+</style>
+{% endblock %} {% block content %}
+<h2>Oh no! Something went wrong (500)</h2>
+<p>We encountered an internal error and couldn't complete your request.</p>
+<h5>Here are a few things you can try:</h5>
+<ul>
+  <li>Double-check the URL for typos or errors.</li>
+  <li>Go back to the <a href="{% url 'home' %}">Homepage</a>.</li>
+  <li>Try refreshing the page after a few minutes.</li>
+  <li>Browse our <a href="{% url 'blogs' %}">latest blog posts</a>.</li>
+</ul>
+{% endblock %} If the problem persists, please contact us and let us know what
+happened.

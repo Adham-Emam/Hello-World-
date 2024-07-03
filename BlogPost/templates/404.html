@@ -1,0 +1,50 @@
+{% extends 'layout.html' %}
+{% block  title%}
+Page Not Found
+{% endblock %}
+{% block styles %}
+<style>
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    line-height: 2;
+    min-height: 100vh;
+}
+  h2 {
+    font-size: 3.5rem;
+    color: var(--main-color);
+    text-shadow: -3px 3px 0 var(--header-color);
+    margin-bottom: 25px;
+  }
+  h5 {
+    color: var(--third-color);
+    font-size: 1.2rem;
+    margin: 20px  0 10px;
+  }
+  p,
+  li {
+    font-weight: 600;
+  }
+  a{
+      color: var(--header-color);
+      transition-duration: 0.3s;
+    }
+    a:hover{
+        color: var(--main-color);
+        text-shadow: -2px 2px  0 var(--header-color);
+    }
+</style>
+{% endblock %} {% block content %}
+<h2>Oops! Page Not Found (404)</h2>
+<p>It looks like the page you're looking for doesn't exist.</p>
+<h5>Here are a few things you can try:</h5>
+<ul>
+  <li>Double-check the URL for typos or errors.</li>
+  <li>Go back to the <a href="{% url 'home' %}">Homepage</a>.</li>
+  <li>Browse our <a href="{% url 'blogs' %}">latest blog posts</a>.</li>
+  <li>Use the search bar above to find what you need.</li>
+</ul>
+{% endblock %}
