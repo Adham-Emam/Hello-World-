@@ -3,14 +3,14 @@ Login {% endblock %} {% block styles %}
 <style>
   .form-login .container {
     background-color: white;
-    color: black;
+    color: var(--main-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
     min-height: 500px;
     padding: 0;
     margin: 150px auto 50px;
-    box-shadow: -5px 5px 0 0 var(--third-color);
+    box-shadow: -5px 5px 0 0px var(--main-color);
   }
   @media (max-width: 500px) {
     .form-login .container {
@@ -22,16 +22,23 @@ Login {% endblock %} {% block styles %}
     padding: 20px 40px;
   }
   .form-container .message {
-    border: 1px solid var(--main-color);
+    padding: 10px 20px;
+  }
+  .form-container .error {
+    border: 1px solid var(--header-color);
     background-color: rgba(151, 17, 17, 0.5);
     color: rgba(150, 0, 0, 0.5);
-    padding: 10px 20px;
+  }
+  .form-container .success {
+    border: 1px solid rgba(47, 150, 0, 0.5);
+    background-color: rgba(30, 230, 8, 0.5);
+    color: rgba(47, 150, 0, 0.5);
   }
   .form-container h2 {
     font-weight: 300;
     font-size: 2.5rem;
     margin-bottom: 20px;
-    color: #022;
+    text-shadow: -2px 1px 0 var(--main-color);
   }
   .form-container h2 span {
     font-weight: 900;
@@ -48,7 +55,7 @@ Login {% endblock %} {% block styles %}
     border: 1px solid black;
   }
   .form-container form input:focus {
-    border-left: 5px solid var(--main-color);
+    border-left: 5px solid var(--header-color);
   }
   .form-container form button {
     padding: 10px 40px;
@@ -66,8 +73,8 @@ Login {% endblock %} {% block styles %}
   }
   .form-container form a {
     padding: 7px 40px;
-    border: 3px solid var(--main-color);
-    color: var(--main-color);
+    border: 3px solid var(--header-color);
+    color: var(--header-color);
     font-weight: 900;
     transition-duration: 0.3s;
   }
@@ -81,8 +88,8 @@ Login {% endblock %} {% block styles %}
     }
   }
   .form-container form a:hover {
-    background-color: var(--main-color);
-    color: white;
+    background-color: var(--header-color);
+    color: var(--text-color);
   }
   .image {
     width: 100%;
@@ -108,7 +115,7 @@ Login {% endblock %} {% block styles %}
       {% if messages %}
       <ul>
         {% for message in messages %}
-        <li class="message">{{ message }}</li>
+        <li class="message {{message.tags}}">{{ message }}</li>
         {% endfor %}
       </ul>
       {% endif %}
@@ -131,7 +138,7 @@ Login {% endblock %} {% block styles %}
     </div>
     <div class="image">
       <img
-        src="https://tse2.mm.bing.net/th?id=OIG1.7g9UYoWqNfmIzFSvigUU&pid=ImgGn"
+        src="https://tse2.mm.bing.net/th?id=OIG1.tIh_qjuRn0UfM52bCZ4I&pid=ImgGn"
         alt=""
       />
     </div>

@@ -36,11 +36,11 @@
           <ul>
             <li><a href="{% url 'home' %}">Home</a></li>
             <li><a href="{% url 'blogs' %}">Blogs</a></li>
+            <li><a href="#">Forums</a></li>
             {% if user.is_authenticated %}
             <li><a href="{% url 'logout' %}">Logout</a></li>
             {% else %}
-            <li><a href="{% url 'login' %}">Login</a></li>
-            <li><a href="{% url 'register' %}">Register</a></li>
+            <li class="sign-up"><a href="{% url 'register' %}">Sign Up</a></li>
             {% endif %}
           </ul>
         </nav>
@@ -53,11 +53,11 @@
           <ul>
             <li><a href="{% url 'home' %}">Home</a></li>
             <li><a href="{% url 'blogs' %}">Blogs</a></li>
+            <li><a href="#">Forums</a></li>
             {% if user.is_authenticated %}
             <li><a href="{% url 'logout' %}">Logout</a></li>
             {% else %}
-            <li><a href="{% url 'login' %}">Login</a></li>
-            <li><a href="{% url 'register' %}">Register</a></li>
+            <li><a href="{% url 'register' %}">Sign Up</a></li>
             {% endif %}
           </ul>
         </div>

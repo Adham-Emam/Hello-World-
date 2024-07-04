@@ -1,10 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap");
 :root {
-  --main-color: #f0db4f;
-  --second-color: #cd9b36;
-  --third-color: #323330;
-  --header-color: #033;
-  --text-color: #ddd;
+  --main-color: #1a1a2e; /* Dark navy blue */
+  --second-color: #16213e; /* Darker navy blue */
+  --third-color: #0f3460; /* Dark blue */
+  --header-color: #e94560; /* Dark red */
+  --text-color: #e8e8e8; /* Light gray */
 }
 * {
   margin: 0;
@@ -32,7 +32,6 @@ a {
 }
 .btn:hover {
   background-color: var(--main-color);
-  color: var(--third-color);
   box-shadow: -2px 2px 0 0 var(--third-color);
 }
 /* Default container width */
@@ -62,7 +61,9 @@ h3,
 h4,
 h5,
 h6 {
-  color: var(--main-color);
+  color: var(--header-color);
+  text-shadow: -3px 3px 0 var(--main-color);
+
   width: fit-content;
   font-family: "Fira Code", monospace;
   line-height: 1.5;
@@ -75,7 +76,7 @@ p {
 header {
   width: 100%;
   background-color: var(--header-color);
-  box-shadow: 0 2px 2px 2px #111;
+  box-shadow: 0 2px 2px 2px var(--main-color);
   height: 100px;
   overflow: hidden;
   transition-duration: 0.5s;
@@ -105,6 +106,9 @@ header form {
   width: 50%;
   box-shadow: -1px 1px 0 2px black;
   transition-duration: 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 header form:hover {
   box-shadow: -4px 4px 0 2px black;
@@ -116,10 +120,10 @@ header form button {
   outline: none;
   color: var(--third-color);
 }
-header form input { 
-  width: calc(100% - 25px);
+header form input {
+  width: calc(100% - 35px);
 }
-header form i{ 
+header form i {
   font-size: 1rem;
 }
 nav ul {
@@ -133,9 +137,28 @@ nav ul li {
   padding: 10px;
   position: relative;
 }
+nav li.sign-up {
+  background-color: var(--second-color);
+  box-shadow: -2px 1px 0 0 var(--third-color);
+  padding: 10px 20px;
+  transition-duration: 0.3s;
+  border-radius: 25px;
+  margin-left: 5px;
+}
+nav li.sign-up:hover {
+  background-color: var(--main-color);
+  box-shadow: -2px 1px 0 1px var(--third-color);
+  transform: scale(1.03);
+}
+nav li.sign-up::before {
+  display: none;
+}
+nav li.sign-up:hover a {
+  color: white;
+}
 nav ul li::before {
   content: "";
-  background-color: var(--main-color);
+  background-color: var(--third-color);
   width: 0%;
   height: 1px;
   position: absolute;
@@ -153,7 +176,8 @@ nav ul li a {
   font-weight: 600;
 }
 nav ul li:hover a {
-  color: var(--text-color);
+  color: var(--third-color);
+  text-shadow: -1px 1px 0 var(--main-color);
 }
 .nav-icon {
   display: none;
@@ -247,10 +271,43 @@ main {
   flex-direction: column;
   position: relative;
 }
+.intro > div {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  opacity: 0.3;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 500px;
+  background-color: var(--third-color);
+  border-radius: 50%;
+  z-index: -1;
+  box-shadow: 0 0 200px 100px var(--third-color);
+}
+.intro > div::before,
+.intro > div::after {
+  content: "";
+  background-color: var(--third-color);
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  box-shadow: 0 0 200px 0 var(--third-color);
+}
+.intro > div::before {
+  opacity: 0.2;
+  width: 200%;
+  height: 200%;
+}
+.intro > div::after {
+  opacity: 0.1;
+  width: 300%;
+  height: 300%;
+}
 .intro h1 {
   font-size: 3.5rem;
-  color: var(--main-color);
-  text-shadow: -3px 3px 0 var(--header-color);
   margin-bottom: 25px;
 }
 @media (max-width: 767px) {
@@ -270,7 +327,7 @@ main {
   justify-content: center;
   align-items: center;
   background-color: var(--header-color);
-  box-shadow: -2px 2px 3px 3px var(--third-color);
+  box-shadow: -2px 2px 0 2px var(--main-color);
   border-radius: 50%;
   padding: 10px;
   font-size: 2rem;
@@ -315,7 +372,6 @@ main {
 .blogs h2 {
   margin: auto;
   font-size: 2.5rem;
-  text-shadow: -3px 3px 0px var(--header-color);
 }
 .blogs .cards {
   display: grid;
@@ -347,11 +403,11 @@ main {
 }
 .blogs .card h3 {
   color: white;
-  text-shadow: -1px 0px 0 var(--third-color);
+  text-shadow: -1px 0px 0 var(--main-color);
   transition-duration: 0.3s;
 }
 .blogs .card:hover h3 {
-  text-shadow: -2px 1px 0 var(--third-color);
+  text-shadow: -2px 1px 0 var(--main-color);
 }
 .blogs .card img {
   width: 100%;
@@ -365,17 +421,23 @@ main {
   gap: 10px;
 }
 .blogs .card ul li {
-  background-color: #333;
-  padding: 5px 10px;
+  background-color: var(--second-color);
   border-radius: 50px;
   text-transform: capitalize;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition-duration: 0.3s;
+  box-shadow: -1px 1px 0 0 var(--main-color);
+}
+.blogs .card ul li:hover {
+  background-color: var(--header-color);
+  box-shadow: -2px 1px 0 1px var(--third-color);
 }
 .blogs .card ul li a {
   color: white;
   font-size: 0.6rem;
+  padding: 5px 10px;
 }
 .about h2,
 .story h2,
@@ -383,7 +445,6 @@ main {
 .cta h2 {
   margin: auto;
   font-size: 2.5rem;
-  text-shadow: -3px 3px 0px var(--header-color);
 }
 .about p,
 .story p,
@@ -405,5 +466,6 @@ footer {
   text-align: center;
 }
 footer a {
+  font-weight: 800;
   color: var(--main-color);
 }
