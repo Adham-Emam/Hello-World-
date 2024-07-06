@@ -104,8 +104,8 @@ header form {
   padding: 10px 20px;
   border-radius: 25px;
   width: 30%;
-  border: 2px solid black;
   box-shadow: -1px 1px 0 2px black;
+  border: 1px solid black;
   transition-duration: 0.3s;
   display: flex;
   justify-content: center;

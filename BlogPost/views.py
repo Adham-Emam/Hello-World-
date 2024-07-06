@@ -3,8 +3,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .form import CustomUserCreationForm
-from .models import BlogPost
+from .models import BlogPost, Channel
 from .article_fetcher import ArticleFetcher
+from .forum_channels import create_channels
 
 
 def fetch_and_save_articles():
@@ -133,6 +134,34 @@ def blog_page(request, id):
     article.tags = article.tags.split(', ')
 
     return render(request, 'blog_page.html', {"article": article})
+
+
+def forum(request):
+    # Create channels or check for new one
+    create_channels()
+
+    channels = Channel.objects.all()
+
+    context = {
+        'channels': channels
+    }
+    return render(request, 'forum.html', context)
+
+
+def channel_page(request, id):
+    channels = Channel.objects.all()
+
+    for channel in channels:
+        channel.description = channel.description[:30] + ' . . .'
+
+    current_channel = Channel.objects.get(id=id)
+
+    context = {
+        'current_channel': current_channel,
+        'channels': channels
+    }
+
+    return render(request, 'channel_page.html', context)
 
 
 def regiester(request):

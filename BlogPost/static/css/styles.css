@@ -83,7 +83,7 @@ header {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 100;
+  z-index: 103;
 }
 header .container {
   padding: 20px 10px;
@@ -103,12 +103,18 @@ header form {
   background-color: var(--text-color);
   padding: 10px 20px;
   border-radius: 25px;
-  width: 50%;
+  width: 30%;
+  border: 2px solid black;
   box-shadow: -1px 1px 0 2px black;
   transition-duration: 0.3s;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+@media (max-width: 767px) {
+  header form {
+    width: 50%;
+  }
 }
 header form:hover {
   box-shadow: -4px 4px 0 2px black;
@@ -121,7 +127,7 @@ header form button {
   color: var(--third-color);
 }
 header form input {
-  width: calc(100% - 35px);
+  width: 100%;
 }
 header form i {
   font-size: 1rem;

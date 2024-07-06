@@ -3,8 +3,6 @@ from django.db import models
 
 
 class CustomUser(AbstractUser):
-    # profile_img = models.ImageField(
-    #     upload_to='profile_img/', blank=True, null=True)
     bio = models.TextField(blank=True)
 
     def __str__(self):
@@ -30,11 +28,21 @@ class BlogPost(models.Model):
         return self.title
 
 
-class Comment(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    content = models.TextField(max_length=5000)
-    blog_post = models.ForeignKey(
-        BlogPost, related_name='comments', on_delete=models.CASCADE)
+class Channel(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True)
 
     def __str__(self):
-        return f'Comment by {self.user.username} on {self.blog_post.title}'
+        return self.name
+
+
+class Comment(models.Model):
+    channel = models.ForeignKey(
+        Channel, related_name='comments', on_delete=models.CASCADE)
+    content = models.TextField()
+    created_at = models.DateTimeField()
+    created_by = models.ForeignKey(
+        CustomUser, related_name='comments', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'Comment by {self.created_by} on {self.thread}'
