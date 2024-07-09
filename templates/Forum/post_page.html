@@ -1,4 +1,5 @@
-{% extends 'layout.html' %} {% block title %} Hello, Forum! | Posts {% endblock %} {% block styles %}
+{% extends 'layout.html' %} {% block title %} Hello, Forum! | Posts {% endblock
+%} {% block styles %}
 <style>
   body > .container {
     margin-top: 150px;
@@ -128,7 +129,7 @@
         <i class="fa-regular fa-heart"></i>
         {% endif %} {{post.total_likes}}
       </a>
-      <a  href='#comment' onclick="commentFocus()">
+      <a href="#comment" onclick="commentFocus()">
         <i class="fa-regular fa-comment"></i>{{post.total_comments}}
       </a>
     </div>
