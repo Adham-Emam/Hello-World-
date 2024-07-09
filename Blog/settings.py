@@ -1,6 +1,5 @@
 import os
 import django_heroku
-import dj_database_url
 from pathlib import Path
 
 
@@ -24,7 +23,8 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'BlogPost',
-    'Forum'
+    'Forum',
+    'Users',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,12 +44,13 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
+
 ROOT_URLCONF = 'Blog.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -76,7 +77,7 @@ DATABASES = {
 }
 
 
-AUTH_USER_MODEL = 'BlogPost.CustomUser'
+AUTH_USER_MODEL = 'Users.CustomUser'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -115,7 +116,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'BlogPost/static'),
+    os.path.join(BASE_DIR, 'static'),
 ]
 
 
@@ -129,4 +130,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 django_heroku.settings(locals())
 
-LOGIN_URL = '/login'
+# LOGIN_URL = 'users/login/'

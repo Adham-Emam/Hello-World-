@@ -1,0 +1,110 @@
+{% extends 'layout.html' %} {% block title %} Hello, Forum! {% endblock %} {% block styles %}
+<style>
+  h2 {
+    font-size: 2.8rem;
+    margin: 150px auto 10px;
+    text-align: center;
+  }
+  h2 + p {
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  .cards {
+    margin-top: 50px;
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fit, 350px);
+  }
+  form {
+    display: flex;
+    align-items: center;
+    width: 80%;
+    background-color: var(--third-color);
+    padding: 10px 20px;
+    margin: 20px auto;
+    border-radius: 25px;
+    border: 1px solid var(--main-color);
+    box-shadow: -2px 2px 0 0 var(--main-color);
+    transition-duration: 0.3s;
+  }
+  form:hover {
+    border: 1px solid var(--header-color);
+    box-shadow: -4px 4px 0 0 var(--header-color);
+  }
+  form input,
+  form button {
+    background-color: transparent;
+    outline: none;
+    border: none;
+    color: var(--text-color);
+  }
+  form input {
+    width: 100%;
+    caret-color: var(--header-color);
+  }
+  form button {
+    cursor: pointer;
+  }
+  @media (max-width: 767px) {
+    .cards {
+      grid-template-columns: repeat(auto-fit, 250px);
+    }
+  }
+  .card {
+    margin: 10px 20px;
+  }
+  .card a {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: var(--third-color);
+    color: var(--text-color);
+    box-shadow: -2px 1px 0 2px var(--main-color);
+    border: 1px solid var(--main-color);
+    transition-duration: 0.3s;
+    border-radius: 20px;
+    font-weight: 600;
+  }
+  .card a:hover {
+    transform: scale(1.03);
+    background-color: var(--main-color);
+    box-shadow: -2px 2px 0 2px var(--header-color);
+    border: 1px solid var(--header-color);
+  }
+  .card a:hover span {
+    color: var(--third-color);
+    transition-duration: 0.3s;
+  }
+  .card span {
+    color: var(--second-color);
+    margin-right: 10px;
+  }
+</style>
+{% endblock %} {% block content %}
+<div class="container">
+  <h2>Welcome to Hello, Forum!</h2>
+  <p>Pick a channel to see the latest posts</p>
+  <form method="POST">
+    {% csrf_token %}
+    <input
+      type="text"
+      name="search-channel"
+      placeholder="Search for channels. . ."
+    />
+    <button value="submit">
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </button>
+  </form>
+  <div class="cards">
+    {% for channel in channels %}
+    <div class="card">
+      <a href="{% url 'channel_page' channel.id %}"
+        ><span>#</span>
+        <p>{{channel.name}}</p>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

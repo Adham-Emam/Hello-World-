@@ -1,0 +1,349 @@
+{% extends 'layout.html' %} {% block title %} Hello, Forum! |
+{{current_channel.name}} {% endblock %} {% block styles %}
+<style>
+  .content {
+    margin-top: 100px;
+    height: calc(100vh - 100px);
+    display: flex;
+  }
+  aside {
+    background-color: var(--main-color);
+    border-right: 1px solid var(--header-color);
+    width: 400px;
+    height: calc(100vh - 100px);
+    overflow-y: scroll;
+  }
+  aside .close_button {
+    display: none;
+  }
+  aside ul li {
+    border-bottom: 1px solid var(--header-color);
+    transition-duration: 0.3s;
+  }
+  aside ul li a {
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+  }
+  aside ul li h4 {
+    transition-duration: 0.3s;
+    text-shadow: -2px 1px 0 var(--main-color);
+  }
+  aside ul li span {
+    color: var(--third-color);
+    margin-right: 10px;
+    font-weight: 600;
+    transition-duration: 0.3s;
+  }
+  aside ul li.search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 10px;
+    gap: 10px;
+  }
+  aside li.search form {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background-color: var(--third-color);
+    padding: 10px 20px;
+    border-radius: 25px;
+    border: 1px solid var(--header-color);
+    box-shadow: -2px 2px 0 0 var(--header-color);
+    transition-duration: 0.3s;
+  }
+  aside li.search form:hover {
+    box-shadow: -4px 4px 0 0 var(--header-color);
+  }
+  aside li.search input,
+  aside li.search button {
+    background-color: transparent;
+    outline: none;
+    border: none;
+    color: var(--text-color);
+  }
+  aside li.search input {
+    width: 100%;
+    caret-color: var(--header-color);
+  }
+  aside li.search button {
+    cursor: pointer;
+  }
+  aside ul li:not(.search):hover {
+    background-color: var(--header-color);
+  }
+  aside ul li:hover h4 {
+    color: var(--text-color);
+  }
+  .channel {
+    width: 100%;
+    height: calc(100vh - 100px);
+  }
+  .channel_head {
+    background-color: var(--second-color);
+    box-shadow: 5px 5px 5px 0 var(--main-color);
+    border-bottom: 1px solid var(--header-color);
+    height: fit-content;
+    padding: 15px 20px;
+    position: relative;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    z-index: 101;
+  }
+  .channel_head .menu_button {
+    display: none;
+  }
+  .channel_head h3 {
+    color: var(--text-color);
+  }
+  .channel_head span {
+    color: var(--third-color);
+    font-weight: 600;
+  }
+  .message {
+    padding: 10px 20px;
+    margin: 10px auto 0;
+    width: 95%;
+    border-radius: 25px;
+    font-size: 0.8rem;
+  }
+  .message.error {
+    border: 1px solid var(--header-color);
+    background-color: rgba(223, 11, 11, 0.3);
+    color: var(--text-color);
+  }
+  .message.success {
+    border: 1px solid rgba(81, 255, 0, 1);
+    background-color: rgba(30, 230, 8, 0.3);
+    color: var(--text-color);
+  }
+  .channel .input {
+    background-color: var(--main-color);
+    border: 1px solid var(--header-color);
+    box-shadow: -5px 5px 5px 0 var(--main-color);
+    border-radius: 25px;
+    width: 95%;
+    margin: 15px auto;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    transition-duration: 0.3s;
+  }
+  .channel .input input,
+  .channel .input button {
+    outline: none;
+    border: none;
+    background-color: transparent;
+  }
+  .channel .input input {
+    width: 100%;
+    caret-color: var(--header-color);
+    color: var(--text-color);
+  }
+  .channel .input button {
+    font-size: 1.2rem;
+    border-radius: 5px;
+    width: 25px;
+    height: 25px;
+    background-color: var(--text-color);
+    color: var(--main-color);
+    box-shadow: -2px 2px 0 0 var(--header-color);
+    cursor: pointer;
+  }
+  .channel .post-log {
+    height: calc(100% - 60px);
+    overflow-y: scroll;
+  }
+  .channel .post-log .description {
+    background-color: var(--third-color);
+    border: 1px solid var(--header-color);
+    width: 85%;
+    margin: 10px auto;
+    padding: 10px 30px;
+    text-align: center;
+    border-radius: 25px;
+    line-height: 2;
+    font-weight: 600;
+  }
+  .channel .post {
+    background-color: var(--main-color);
+    margin: 30px 20px;
+    padding-top: 30px;
+  }
+  .channel .post-head {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 0 20px 20px;
+  }
+  .channel .post-head span {
+    opacity: 0.6;
+  }
+  .channel .post > p {
+    margin-bottom: 20px;
+    padding: 0 20px 20px;
+  }
+  .channel .post .post-engagement {
+    background-color: var(--third-color);
+    padding: 10px 20px;
+  }
+  .channel .post .post-engagement a {
+    color: var(--text-color);
+    margin: 0 10px;
+    transition-duration: 0.3s;
+  }
+  .channel .post .post-engagement a:hover {
+    color: var(--header-color);
+  }
+  .channel .post .post-engagement i {
+    margin-right: 5px;
+    font-size: 1.2rem;
+  }
+  @media (max-width: 767px) {
+    .channel_head .menu_button {
+      background-color: var(--text-color);
+      box-shadow: -2px 1px 0 0 var(--header-color);
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+    .channel_head .menu_button i {
+      color: var(--main-color);
+    }
+    aside {
+      width: 270px;
+      position: absolute;
+      top: 100px;
+      left: -300px;
+      z-index: 102;
+      transition-duration: 0.5s;
+    }
+    aside .close_button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: var(--text-color);
+      width: 25px;
+      height: 25px;
+      font-size: 0.8rem;
+      border-radius: 50%;
+      color: var(--main-color);
+      padding: 10px;
+      box-shadow: -2px 1px 0 0 var(--header-color);
+      cursor: pointer;
+    }
+    aside.active {
+      left: 0;
+    }
+    aside ul li h4 {
+      font-size: 0.8rem;
+    }
+    .channel_head h3 {
+      font-size: 0.8rem;
+    }
+  }
+</style>
+{% endblock %} {% block content %}
+<div class="content">
+  <aside>
+    <ul>
+      <li class="search">
+        <form
+          method="POST"
+        >
+        {% csrf_token %}
+          <input
+            type="text"
+            name="search-channel"
+            placeholder="Search for channels. . ."
+          />
+          <button value="submit">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </form>
+        <i class="fa-solid fa-x close_button"></i>
+      </li>
+      {% for channel in channels %}
+      <li>
+        <a href="{% url 'channel_page' channel.id %}">
+          <span>#</span>
+          <h4>{{channel.name}}</h4>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </aside>
+  <div class="channel">
+    <header class="channel_head">
+      <div class="menu_button">
+        <i class="fa-solid fa-arrow-left"></i>
+      </div>
+      <span>#</span>
+      <h3>{{current_channel}}</h3>
+    </header>
+    <div class="post-log">
+      {% if messages %}
+      <ul>
+        {% for message in messages %}
+        <li class="message {{message.tags}}">{{ message }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      <form method="POST" action="{% url 'add_post' current_channel.id %}">
+        {% csrf_token %}
+        <div class="input">
+          <input
+            type="text"
+            name="post-content"
+            placeholder="Type what is in your mind. . ."
+          />
+          <button value="submit">
+            <i class="fa-solid fa-arrow-down"></i>
+          </button>
+        </div>
+      </form>
+      <div class="description">{{current_channel.description}}</div>
+      {% for post in posts %}
+      <div class="post">
+        <div class="post-head">
+          <h4>{{post.created_by}}</h4>
+          <span>{{post.created_at}}</span>
+        </div>
+        <p>{{post.content}}</p>
+        <div class="post-engagement">
+          <a href="{% url 'like_post' post.id %}">
+            {% if post.liked %}
+            <i class="fa-solid fa-heart"></i>
+            {% else %}
+            <i class="fa-regular fa-heart"></i>
+            {% endif %} {{post.total_likes}}
+          </a>
+          <a href="#">
+            <i class="fa-regular fa-comment"></i>{{post.total_comments}}
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %} {% block scripts %}
+<script>
+  const asideMenu = document.querySelector("aside");
+  document.querySelector(".menu_button").addEventListener("click", () => {
+    asideMenu.classList.add("active");
+  });
+
+  document.querySelector(".close_button").addEventListener("click", () => {
+    asideMenu.classList.remove("active");
+  });
+</script>
+{% endblock %}

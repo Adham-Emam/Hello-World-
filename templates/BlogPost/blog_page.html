@@ -1,0 +1,197 @@
+{% extends 'layout.html' %} {% load static %} {% block title %}
+{{article.title}} {% endblock %} {% block styles %}
+<style>
+  body > .container {
+    max-width: 100%;
+    display: flex;
+    justify-content: space-between;
+    min-height: 100vh;
+    margin-top: 175px;
+    gap: 20px;
+  }
+  .content {
+    width: 90%;
+    margin-bottom: 50px;
+  }
+  .content > span {
+    font-weight: 600;
+    opacity: 0.8;
+    text-align: right;
+  }
+  .content h2 {
+    font-size: 2.2rem;
+    margin-bottom: 30px;
+  }
+  .content img {
+    width: 100%;
+    aspect-ratio: 5/2;
+  }
+  .content ul {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 10px 0 20px;
+  }
+  .content ul li {
+    background-color: var(--third-color);
+    margin: 5px 10px;
+    border-radius: 50px;
+    text-transform: capitalize;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition-duration: 0.3s;
+  }
+  .content ul li:hover {
+    background-color: var(--header-color);
+    box-shadow: -2px 1px 0 1px var(--main-color);
+  }
+  .content ul li a {
+    color: var(--text-color);
+    padding: 5px 10px;
+    font-size: 0.8rem;
+  }
+  .content > p {
+    color: var(--text-color);
+    font-weight: 400;
+    font-size: 1rem;
+  }
+  aside {
+    background-color: var(--main-color);
+    width: 450px;
+    padding: 50px 20px 50px;
+    box-shadow: -2px 4px 2px 2px var(--main-color);
+    border-radius: 25px 25px 0 0;
+    border: 1px solid var(--header-color);
+  }
+  @media (max-width: 767px) {
+    aside {
+      width: 250px;
+    }
+  }
+  @media (max-width: 600px) {
+    body > .container {
+      flex-direction: column;
+    }
+    aside {
+      width: 100%;
+    }
+  }
+  aside > div {
+    border: 1px solid var(--header-color);
+    padding: 20px 10px;
+    border-radius: 25px;
+    margin-bottom: 30px;
+  }
+  aside h3 {
+    text-shadow: -2px 1px 0 var(--main-color);
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+  aside .author {
+    position: relative;
+  }
+  aside ul {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    gap: 10px;
+    display: flex;
+  }
+  aside ul a {
+    font-size: 1.2rem;
+    color: var(--text-color);
+    transition-duration: 0.3s;
+  }
+  aside ul a:hover {
+    color: var(--header-color);
+  }
+  aside > a {
+    display: block;
+    margin-top: 100px;
+  }
+  aside .profile_image img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    transition-duration: 0.3s;
+    margin-bottom: 10px;
+  }
+  aside .profile_image img:hover {
+    transform: scale(1.05);
+    outline: 2px solid var(--main-color);
+  }
+  aside .about-blog a {
+    background-color: var(--third-color);
+    display: block;
+    width: fit-content;
+    margin: 20px auto 0;
+    padding: 10px 20px;
+    border-radius: 25px;
+    color: var(--text-color);
+    transition-duration: 0.3s;
+  }
+  aside .about-blog a:hover {
+    transform: scale(1.05);
+    background-color: var(--second-color);
+    box-shadow: -3px 3px 0 0 var(--header-color);
+  }
+</style>
+{% endblock %} {% block content %}
+<div class="container">
+  <article class="content">
+    <span>{{article.published_date}}</span>
+    <h2>{{article.title}}</h2>
+    {% if article.cover_img %}
+    <img src="{{article.cover_img}}" alt="" />
+    {% else %}
+    <img src="{% static 'images/blank.jpg' %}" alt="" />
+    {% endif %}
+    <ul>
+      {% for tag in article.tags %}
+      <li><a href="{% url 'search' tag %}">{{tag}}</a></li>
+      {% endfor %}
+    </ul>
+    <p>{{article.description}}</p>
+  </article>
+  <aside>
+    <div class="about-blog">
+      <p>Likes: <strong>{{article.reactions}}</strong></p>
+      <p>
+        Reading Time: <strong>{{article.reading_time_minutes}} mins</strong>
+      </p>
+      <a href="{{article.url}}" target="_blank"
+        ><i class="fa-solid fa-link"></i> Visit article</a
+      >
+    </div>
+    <div class="author">
+      <h3>About User</h3>
+      {% if article.profile_image %}
+      <a href="{{article.website_url}}" target="_blank" class="profile_image">
+        <img src="{{article.profile_image}}" alt="" />
+      </a>
+      {% else %}
+      <img
+        src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+        alt=""
+      />
+      {% endif %}
+      <div class="author-info">
+        <ul>
+          <li title="{{article.author}} Twitter">
+            <a href="{{article.twitter_url}}" target="_blank"
+              ><i class="fa-brands fa-x-twitter"></i
+            ></a>
+          </li>
+          <li title="{{article.author}} Github">
+            <a href="{{article.github_url}}" target="_blank"
+              ><i class="fa-brands fa-github"></i
+            ></a>
+          </li>
+        </ul>
+        <p>Name: <strong>{{article.author}}</strong></p>
+      </div>
+    </div>
+  </aside>
+</div>
+{% endblock %}
