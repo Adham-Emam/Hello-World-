@@ -326,7 +326,7 @@
             <i class="fa-regular fa-heart"></i>
             {% endif %} {{post.total_likes}}
           </a>
-          <a href="#">
+          <a href="{% url 'post_page' post.id %}">
             <i class="fa-regular fa-comment"></i>{{post.total_comments}}
           </a>
         </div>

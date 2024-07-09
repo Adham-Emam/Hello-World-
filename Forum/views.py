@@ -44,7 +44,6 @@ def forum(request):
         query = request.POST.get('search-channel', '')
 
         for channel in channels:
-            print(channel.name)
             if query.lower() in channel.name.lower():
                 results.append(channel)
 
@@ -79,7 +78,6 @@ def channel_page(request, id):
         query = request.POST.get('search-channel', '')
 
         for channel in channels:
-            print(channel.name)
             if query.lower() in channel.name.lower():
                 results.append(channel)
         context = {
@@ -121,9 +119,40 @@ def like_post(request, id):
 
     if request.user in post.likes.all():
         post.likes.remove(request.user)
-        liked = False
     else:
         post.likes.add(request.user)
-        liked = True
 
-    return redirect('channel_page', id=post.channel.id)
+    next_url = request.GET.get('next', 'channel_page')
+
+    return redirect(next_url, id=post.channel.id)
+
+
+def post_page(request, id):
+    post = get_object_or_404(Post, id=id)
+
+    if request.method == 'POST':
+        comment = request.POST['comment']
+
+        new_comment = Comment(
+            content=comment, created_by=request.user, post=post)
+        Comment.save(new_comment)
+
+    post_time_difference = timezone.now() - post.created_at
+    post.created_at = format_time_difference(post_time_difference)
+
+    comments = Comment.objects.filter(post=id)
+
+    for comment in comments:
+        comment_time_difference = timezone.now() - comment.created_at
+        comment.created_at = format_time_difference(comment_time_difference)
+
+    if request.user in post.likes.all():
+        post.liked = True
+    else:
+        post.liked = False
+
+    context = {
+        'post': post,
+        'comments': comments
+    }
+    return render(request, 'Forum/post_page.html', context)

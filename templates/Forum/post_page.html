@@ -1,0 +1,164 @@
+{% extends 'layout.html' %} {% block title %} Hello, Forum! | Posts {% endblock %} {% block styles %}
+<style>
+  body > .container {
+    margin-top: 150px;
+  }
+  .card {
+    background-color: var(--main-color);
+    box-shadow: 5px 5px 10px 5px var(--main-color);
+  }
+  .card > div:first-child {
+    border: 1px solid var(--header-color);
+    padding: 50px 30px 30px;
+  }
+  .card > div > span {
+    font-weight: 600;
+  }
+  .card .post-head {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .card .post-head h2 {
+    text-shadow: -2px 2px 0 var(--second-color);
+  }
+  .card .post-head span {
+    opacity: 0.4;
+    font-weight: 600;
+  }
+  .card p {
+    line-height: 1.5;
+    opacity: 0.7;
+    padding: 20px 0 0;
+  }
+  .card .post-engagement {
+    background-color: var(--third-color);
+    border: 1px solid var(--header-color);
+    border-top: none;
+    padding: 10px 20px;
+  }
+  .card .post-engagement a {
+    color: var(--text-color);
+    margin: 0 10px;
+    transition-duration: 0.3s;
+  }
+  .card .post-engagement a:hover {
+    color: var(--header-color);
+  }
+  .card .post-engagement i {
+    margin-right: 5px;
+    font-size: 1.2rem;
+  }
+  .comments form {
+    background-color: var(--main-color);
+    border: 1px solid var(--header-color);
+    box-shadow: 5px 5px 15px 0 var(--main-color);
+    padding: 0 30px;
+    margin-top: 30px;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+  }
+  .comments form input,
+  .comments form button {
+    background-color: transparent;
+    outline: none;
+    border: none;
+    color: var(--text-color);
+  }
+  .comments form input {
+    width: 100%;
+    caret-color: var(--header-color);
+    padding: 20px 0;
+  }
+  .comments form button {
+    cursor: pointer;
+    color: var(--main-color);
+    background-color: var(--text-color);
+    font-size: 1.2rem;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: -2px 1px 0 0 var(--header-color);
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition-duration: 0.3s;
+  }
+  .comments form button:hover {
+    box-shadow: -2px 1px 0 2px var(--header-color);
+  }
+  .comment {
+    background-color: var(--main-color);
+    margin: 20px 0;
+    padding: 20px 30px;
+    border: 1px solid var(--header-color);
+    box-shadow: 5px 5px 15px 0 var(--main-color);
+    line-height: 1.5;
+  }
+  .comment-head {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  @media (max-width: 767px) {
+    .post-head,
+    .comment-head {
+      justify-content: space-between;
+    }
+  }
+</style>
+{% endblock %} {% block content %}
+<div class="container">
+  <div class="card">
+    <div>
+      <span>{{post.channel}}</span>
+      <div class="post-head">
+        <h2>{{post.created_by}}</h2>
+        <span>{{post.created_at}}</span>
+      </div>
+      <p>{{post.content}}</p>
+    </div>
+    <div class="post-engagement">
+      <a href="{% url 'like_post' post.id %}?next={{ request.get_full_path }}">
+        {% if post.liked %}
+        <i class="fa-solid fa-heart"></i>
+        {% else %}
+        <i class="fa-regular fa-heart"></i>
+        {% endif %} {{post.total_likes}}
+      </a>
+      <a  href='#comment' onclick="commentFocus()">
+        <i class="fa-regular fa-comment"></i>{{post.total_comments}}
+      </a>
+    </div>
+  </div>
+  <div class="comments">
+    <form method="POST">
+      {% csrf_token %}
+      <input
+        type="text"
+        name="comment"
+        id="comment"
+        placeholder="Write a comment to author. . ."
+      />
+      <button value="submit"><i class="fa-solid fa-arrow-down"></i></button>
+    </form>
+    {% for comment in comments %}
+    <div class="comment">
+      <div class="comment-head">
+        <h4>{{comment.created_by}}</h4>
+        <span>{{comment.created_at}}</span>
+      </div>
+      <p>{{comment.content}}</p>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %} {% block scripts %}
+<script>
+  function commentFocus() {
+    comment.focus();
+  }
+</script>
+{% endblock %}
