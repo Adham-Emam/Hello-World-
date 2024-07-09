@@ -1,9 +1,10 @@
 {% extends 'layout.html' %} {% load static %} {% block title %} Hello, World! |
 Home {% endblock %} {% block styles %}
-<style>
-  
-</style>
+<style></style>
 {% endblock %} {% block content %}
+<div class="image">
+  <img src="{% static 'images/background.png' %}" alt="" />
+</div>
 <main>
   <section class="intro">
     <div></div>
@@ -86,7 +87,7 @@ Home {% endblock %} {% block styles %}
         collaborate on projects. Whether you're here to learn, share, or just
         stay informed, you're in the right place.
       </p>
-      <a href="{% url 'register' %}" class="btn">Get Started</a>
+      <a href="{% url 'forum' %}" class="btn">Get Started</a>
     </section>
   </div>
 </main>
