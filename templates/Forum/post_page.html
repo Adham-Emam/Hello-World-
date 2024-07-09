@@ -1,6 +1,4 @@
-{% extends 'layout.html' %} 
-{% block title %} Hello, Forum! | Posts {% endblock %}
-{% block styles %}
+{% extends 'layout.html' %} {% block title %} Hello, Forum! | Posts {% endblock %} {% block styles %}
 <style>
   body > .container {
     margin-top: 150px;
@@ -136,7 +134,7 @@
     </div>
   </div>
   <div class="comments">
-    <form method="POST">
+    <form method="POST" action="{% url 'add_comment' post.id %}">
       {% csrf_token %}
       <input
         type="text"

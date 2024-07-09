@@ -127,7 +127,8 @@ def like_post(request, id):
     return redirect(next_url, id=post.channel.id)
 
 
-def post_page(request, id):
+@login_required
+def add_comment(request, id):
     post = get_object_or_404(Post, id=id)
 
     if request.method == 'POST':
@@ -136,6 +137,12 @@ def post_page(request, id):
         new_comment = Comment(
             content=comment, created_by=request.user, post=post)
         Comment.save(new_comment)
+
+    return redirect('post_page', id=id)
+
+
+def post_page(request, id):
+    post = get_object_or_404(Post, id=id)
 
     post_time_difference = timezone.now() - post.created_at
     post.created_at = format_time_difference(post_time_difference)
