@@ -300,8 +300,8 @@ body > .image img {
   left: 50%;
   opacity: 0.3;
   transform: translate(-50%, -50%);
-  width: 500px;
-  height: 500px;
+  width: 20%;
+  height: 20%;
   background-color: var(--third-color);
   border-radius: 50%;
   z-index: -1;
