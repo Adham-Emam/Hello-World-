@@ -3,7 +3,6 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.utils import timezone
 from .models import Channel, Post, Comment
-from .forum_channels import create_channels
 from datetime import timedelta
 
 
@@ -34,8 +33,7 @@ def format_time_difference(time_difference):
 
 
 def forum(request):
-    # Create channels or check for new one
-    create_channels()
+
 
     channels = Channel.objects.all()
 

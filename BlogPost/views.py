@@ -1,12 +1,8 @@
 from django.shortcuts import render, redirect
 from .models import BlogPost
-from .article_fetcher import fetch_and_save_articles
 
 
 def home(request):
-    # Fetch and save articles if not already saved
-    fetch_and_save_articles()
-
     # Query BlogPost objects to display in the template
     articles = BlogPost.objects.all()
 
